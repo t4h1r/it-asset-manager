@@ -22,19 +22,20 @@ db.init_app(app)
 from models import User, Asset, Category, Location
 from routes import *
 
+# Ensure database tables exist and default admin is created,
+# even when running under Gunicorn (Render) where __main__ is not executed.
+with app.app_context():
+    db.create_all()
+    if not User.query.filter_by(username='admin').first():
+        admin = User(
+            username='admin',
+            email='admin@company.com',
+            password=generate_password_hash('Admin@123'),
+            is_admin=True
+        )
+        db.session.add(admin)
+        db.session.commit()
+        print("Default admin user created: username='admin', password='Admin@123'")
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        # Create default admin user if not exists
-        if not User.query.filter_by(username='admin').first():
-            admin = User(
-                username='admin',
-                email='admin@company.com',
-                password=generate_password_hash('Admin@123'),
-                is_admin=True
-            )
-            db.session.add(admin)
-            db.session.commit()
-            print("Default admin user created: username='admin', password='Admin@123'")
-    
     app.run(debug=True, host='0.0.0.0', port=5000)
