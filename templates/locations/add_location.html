@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Add Location - IT Asset Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h4 class="card-title mb-0">
+                    <i class="bi bi-plus-circle"></i> Add New Location
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('add_location') }}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Location Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" 
+                               required maxlength="100" placeholder="e.g., Main Office, Data Center">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="building" class="form-label">Building</label>
+                        <input type="text" class="form-control" id="building" name="building" 
+                               maxlength="100" placeholder="e.g., Building A, Tower 1">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="floor" class="form-label">Floor</label>
+                            <input type="text" class="form-control" id="floor" name="floor" 
+                                   maxlength="50" placeholder="e.g., 3rd Floor">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="room" class="form-label">Room</label>
+                            <input type="text" class="form-control" id="room" name="room" 
+                                   maxlength="50" placeholder="e.g., Room 301">
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> Save Location
+                        </button>
+                        <a href="{{ url_for('view_locations') }}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

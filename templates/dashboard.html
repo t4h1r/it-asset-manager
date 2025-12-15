@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - IT Asset Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </h1>
+    <div>
+        <span class="badge bg-primary">Welcome, {{ session.username }}!</span>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">Total Assets</h6>
+                        <h2 class="mb-0">{{ total_assets }}</h2>
+                    </div>
+                    <div>
+                        <i class="bi bi-laptop text-primary" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card" style="border-left-color: #198754;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">Active Assets</h6>
+                        <h2 class="mb-0">{{ active_assets }}</h2>
+                    </div>
+                    <div>
+                        <i class="bi bi-check-circle text-success" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card" style="border-left-color: #0dcaf0;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">Categories</h6>
+                        <h2 class="mb-0">{{ categories_count }}</h2>
+                    </div>
+                    <div>
+                        <i class="bi bi-tags text-info" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card" style="border-left-color: #ffc107;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">Locations</h6>
+                        <h2 class="mb-0">{{ locations_count }}</h2>
+                    </div>
+                    <div>
+                        <i class="bi bi-geo-alt text-warning" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-clock-history"></i> Recently Added Assets
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if recent_assets %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Asset Tag</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Added</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for asset in recent_assets %}
+                            <tr>
+                                <td><strong>{{ asset.asset_tag }}</strong></td>
+                                <td>{{ asset.name }}</td>
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        {{ asset.category.name }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if asset.status == 'Active' %}
+                                        <span class="badge bg-success">{{ asset.status }}</span>
+                                    {% elif asset.status == 'Retired' %}
+                                        <span class="badge bg-danger">{{ asset.status }}</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">{{ asset.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ asset.created_at.strftime('%Y-%m-%d') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center my-3">No assets yet. Start by adding your first asset!</p>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{{ url_for('view_assets') }}" class="btn btn-primary">
+                    <i class="bi bi-list-ul"></i> View All Assets
+                </a>
+                <a href="{{ url_for('add_asset') }}" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Add New Asset
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-info-circle"></i> Quick Links
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{{ url_for('view_assets') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-list-ul"></i> View All Assets
+                    </a>
+                    <a href="{{ url_for('add_asset') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-plus-circle"></i> Add New Asset
+                    </a>
+                    {% if session.is_admin %}
+                    <a href="{{ url_for('view_categories') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-tags"></i> Manage Categories
+                    </a>
+                    <a href="{{ url_for('view_locations') }}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-geo-alt"></i> Manage Locations
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-person-circle"></i> User Info
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-2"><strong>Username:</strong> {{ session.username }}</p>
+                <p class="mb-2">
+                    <strong>Role:</strong> 
+                    {% if session.is_admin %}
+                        <span class="badge bg-danger">Administrator</span>
+                    {% else %}
+                        <span class="badge bg-primary">Regular User</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

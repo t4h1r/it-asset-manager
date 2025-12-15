@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+
+{% block title %}Home - IT Asset Manager{% endblock %}
+
+{% block extra_css %}
+<style>
+    .homepage-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        color: white;
+    }
+    
+    .homepage-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,133.3C672,117,768,107,864,122.7C960,139,1056,181,1152,181.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+        background-size: cover;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .hero-subtitle {
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+        opacity: 0.95;
+    }
+    
+    .hero-buttons .btn {
+        min-width: 180px;
+        font-size: 1.1rem;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid white;
+    }
+    
+    .hero-buttons .btn-light {
+        background: white;
+        color: #667eea;
+    }
+    
+    .hero-buttons .btn-light:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    
+    .hero-buttons .btn-outline-light:hover {
+        background: white;
+        color: #667eea;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    
+    .hero-image {
+        position: relative;
+    }
+    
+    .hero-illustration {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        padding: 3rem;
+        border: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    .hero-illustration i {
+        font-size: 15rem;
+        color: rgba(255,255,255,0.3);
+    }
+    
+    .features-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+    
+    .section-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 4rem;
+    }
+    
+    .feature-box {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    
+    .feature-box:hover {
+        transform: translateY(-10px);
+        border-color: #667eea;
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .feature-box h5 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #212529;
+    }
+    
+    .feature-box p {
+        color: #6c757d;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+    
+    .stats-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 60px 0;
+        color: white;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .hero-illustration i {
+            font-size: 8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="homepage-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0 hero-content">
+                <h1 class="hero-title">Manage Your IT Assets with Confidence</h1>
+                <p class="hero-subtitle">
+                    Streamline your asset tracking, monitor hardware lifecycle, and maintain complete control over your organization's technology infrastructure.
+                </p>
+                <div class="hero-buttons d-flex gap-3 flex-wrap">
+                    <a href="{{ url_for('login') }}" class="btn btn-light">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Get Started
+                    </a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-light">
+                        <i class="bi bi-person-plus me-2"></i>Sign Up Free
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 hero-image">
+                <div class="hero-illustration">
+                    <i class="bi bi-pc-display-horizontal"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number"><i class="bi bi-shield-check"></i></div>
+                    <div class="stat-label">Secure Platform</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number"><i class="bi bi-lightning-charge"></i></div>
+                    <div class="stat-label">Fast Performance</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number"><i class="bi bi-people"></i></div>
+                    <div class="stat-label">Multi-User Access</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-number"><i class="bi bi-graph-up"></i></div>
+                    <div class="stat-label">Real-Time Tracking</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-subtitle">Everything you need to manage your IT assets effectively</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <h5>Enterprise Security</h5>
+                    <p>Protected against OWASP Top 10 vulnerabilities with industry-standard encryption and authentication.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+                    <h5>Lightning Fast</h5>
+                    <p>Instant access to asset information with powerful search and advanced filtering capabilities.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <h5>Role-Based Access</h5>
+                    <p>Granular permission controls for administrators and regular users with secure authentication.</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}
