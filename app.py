@@ -287,7 +287,6 @@ with app.app_context():
             print(f"Created {assets_created} default assets.")
         else:
             print("All default assets already exist.")
-            
     except Exception as e:
         print(f"Error initializing database: {e}")
         raise
