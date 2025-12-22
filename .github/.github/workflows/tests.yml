@@ -20,7 +20,7 @@ jobs:
           python - << 'PY'
           import pathlib
 
-          path = pathlib.Path("it-asset-manager/version.txt")
+          path = pathlib.Path("version.txt")
           if not path.exists():
               version = "0.1.0"
           else:
@@ -44,10 +44,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          VERSION=$(tr -d '\n' < it-asset-manager/version.txt)
-          git add it-asset-manager/version.txt
-          git commit -m "chore: bump version to ${VERSION}" || echo "Version already at ${VERSION} or no changes"
-          git push || echo "Nothing to push"
+          if git diff --quiet; then
+            echo "No changes to commit."
+          else
+            VERSION=$(tr -d '\n' < version.txt)
+            git add version.txt
+            git commit -m "chore: bump version to ${VERSION}"
+            git push
+          fi
 
   tests:
     name: Unit tests
@@ -65,10 +69,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r it-asset-manager/requirements.txt
+          pip install -r requirements.txt
 
       - name: Run tests
-        working-directory: it-asset-manager
         run: |
           pytest
 
@@ -128,3 +131,6 @@ jobs:
             echo "Login page did not return 200"
             exit 1
           fi
+
+
+
